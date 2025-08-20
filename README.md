@@ -83,8 +83,18 @@ Loads model weights and serves on port 8888 with tool calling support.
 
 ## Next Steps
 
-After setup, the model will be accessible via API calls on `localhost:8888`. See the [Qwen3-Coder documentation](https://qwenlm.github.io/blog/qwen3-coder/) for integration details.
+After setup, the model will be accessible via API calls on the base url of your runpod pod (what was formerly the jupyter notebooks link with /v1 at the end). See the [Qwen3-Coder documentation](https://qwenlm.github.io/blog/qwen3-coder/) for integration details.
 
-You just need the api key, the base url, and the model name to get qwen coder working. screenshot below. 
 
-markdown![Project Screenshot](qwen3coder-screenshot.png)
+To get Qwen CLI up and running, you only need three things:
+
+### Configuration Settings
+- **API Key:** `qwen-coder-api-key-12345`
+- **Base URL:** `https://yourpodrandomstring-8888.proxy.runpod.net/v1` 
+- **Model Name:** `Qwen3-Coder-30B-A3B-Instruct`
+
+That's all!
+
+For more information about the CLI tool, visit the official repository: [Qwen CLI Coder](https://github.com/QwenLM/qwen-code)!
+
+[Project screenshot](qwen3coder-screenshot.png)
