@@ -10,6 +10,21 @@ pkill -f notebook || echo "No notebook processes found"
 # Set API key (change this to your desired key)
 API_KEY="qwen-coder-api-key-12345"
 
+# GPU Configuration
+TENSOR_PARALLEL_SIZE=1  # Change to 1 for single GPU, 2 for dual A40 setup
+
+
+if [ "$TENSOR_PARALLEL_SIZE" -eq 1 ]; then
+    export CUDA_VISIBLE_DEVICES=0
+else
+    # Multi-GPU NCCL settings
+    export NCCL_DEBUG=WARN
+    export NCCL_SOCKET_IFNAME=^docker0,lo
+    export NCCL_IB_DISABLE=1
+    export NCCL_P2P_DISABLE=1
+    export CUDA_VISIBLE_DEVICES=0,1
+fi
+
 echo "🚀 Starting Qwen3-Coder-30B-A3B-Instruct server with tool calling support..."
 
 # Check if we're in the right directory
@@ -75,7 +90,7 @@ $VLLM_PATH serve "$MODEL_DIR" \
     --api-key "$API_KEY" \
     --served-model-name "Qwen3-Coder-30B-A3B-Instruct" \
     --max-model-len 141728 \
-    --tensor-parallel-size 1 \
+    --tensor-parallel-size $TENSOR_PARALLEL_SIZE \
     --gpu-memory-utilization 0.9 \
     --enable-auto-tool-choice \
     --tool-call-parser "qwen3_coder"
