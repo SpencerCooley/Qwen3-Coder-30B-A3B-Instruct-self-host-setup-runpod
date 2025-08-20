@@ -97,4 +97,4 @@ That's all!
 
 For more information about the CLI tool, visit the official repository: [Qwen CLI Coder](https://github.com/QwenLM/qwen-code)!
 
-[Project screenshot](qwen3coder-screenshot.png)
+![Qwen CLI screenshot with creds](qwen3coder-screenshot.png)
