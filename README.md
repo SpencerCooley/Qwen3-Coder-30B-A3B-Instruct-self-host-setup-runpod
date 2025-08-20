@@ -84,3 +84,7 @@ Loads model weights and serves on port 8888 with tool calling support.
 ## Next Steps
 
 After setup, the model will be accessible via API calls on `localhost:8888`. See the [Qwen3-Coder documentation](https://qwenlm.github.io/blog/qwen3-coder/) for integration details.
+
+You just need the api key, the base url, and the model name to get qwen coder working. screenshot below. 
+
+markdown![Project Screenshot](qwen3coder-screenshot.png)
