@@ -11,19 +11,19 @@ pkill -f notebook || echo "No notebook processes found"
 API_KEY="qwen-coder-api-key-12345"
 
 # GPU Configuration
-TENSOR_PARALLEL_SIZE=1  # Change to 1 for single GPU, 2 for dual A40 setup
+TENSOR_PARALLEL_SIZE=4  # Change to 2 for dual A5000 setup
 
+#A5000 stuff
+# Set NCCL environment variables for better A5000 compatibility
+export NCCL_DEBUG=WARN
+export NCCL_SOCKET_IFNAME=^docker0,lo
+export NCCL_IB_DISABLE=1
+export NCCL_P2P_DISABLE=1
+export CUDA_VISIBLE_DEVICES=0,1,2,3
 
-if [ "$TENSOR_PARALLEL_SIZE" -eq 1 ]; then
-    export CUDA_VISIBLE_DEVICES=0
-else
-    # Multi-GPU NCCL settings
-    export NCCL_DEBUG=WARN
-    export NCCL_SOCKET_IFNAME=^docker0,lo
-    export NCCL_IB_DISABLE=1
-    export NCCL_P2P_DISABLE=1
-    export CUDA_VISIBLE_DEVICES=0,1
-fi
+# Disable torch compilation to avoid MoE kernel issues
+export VLLM_TORCH_COMPILE_LEVEL=0
+#A5000 stuff
 
 echo "🚀 Starting Qwen3-Coder-30B-A3B-Instruct server with tool calling support..."
 
@@ -79,7 +79,7 @@ echo "  - repetition_penalty=1.05"
 echo "  - max_tokens=65536"
 echo ""
 
-# Start vLLM server with optimal settings for A100
+# Start vLLM server with optimal settings 
 echo "🚀 Executing vLLM command..."
 echo "Command: $VLLM_PATH serve $MODEL_DIR --host 0.0.0.0 --port 8888 --api-key $API_KEY --enable-auto-tool-choice --tool-call-parser $MODEL_DIR/qwen3coder_tool_parser.py"
 echo ""
@@ -89,8 +89,8 @@ $VLLM_PATH serve "$MODEL_DIR" \
     --port 8888 \
     --api-key "$API_KEY" \
     --served-model-name "Qwen3-Coder-30B-A3B-Instruct" \
-    --max-model-len 141728 \
+    --max-model-len 70728 \
     --tensor-parallel-size $TENSOR_PARALLEL_SIZE \
     --gpu-memory-utilization 0.9 \
     --enable-auto-tool-choice \
-    --tool-call-parser "qwen3_coder"
+    --tool-call-parser "qwen3_coder" 

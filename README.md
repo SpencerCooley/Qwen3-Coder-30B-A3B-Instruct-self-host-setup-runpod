@@ -49,21 +49,29 @@ sh system_checker.sh
 Validates your environment has everything needed to run the model.
 
 ### 4. Start Qwen API Server
+For single A100 GPU 
 ```bash
-sh start_qwen_with_apikey_and_tools.sh
+sh A100_start_qwen_server.sh
 ```
-if user 2x A40 you need to change the TENSOR_PARALLEL_SIZE  in the script to 2 for 2 GPUs 
+
+
+For RTX A5000 GPU (4 GPU setup)
+```bash
+sh RTXA5000_start_qwen_server.sh
+```
+
+
 Loads model weights and serves on port 8888 with tool calling support.
 
 ## Cost Analysis
 
 | GPU Type | vRAM | Hourly Cost* | Performance |
 |----------|------|-------------|-------------|
-| A100 80GB | 80GB | $1.70/hr | ✅ Tested |
-| 2x A40 80GB | 96GB | $.80/hr | ✅ Tested |
+| A100 | 80GB | $1.70/hr | ✅ Tested (fast startup, good performance)|
+| 4x RTX A5000  | 96GB | $1.08/hr | ✅ Tested (slow startup, good performance)|
 
 
-*2x A40 is cheaper, but initial model loading takes a long time 30min
+*Prices at the time of writing this 08/25
 
 ## Usage Notes
 
