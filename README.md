@@ -52,6 +52,7 @@ Validates your environment has everything needed to run the model.
 ```bash
 sh start_qwen_with_apikey_and_tools.sh
 ```
+if user 2x A40 you need to change the TENSOR_PARALLEL_SIZE  in the script to 2 for 2 GPUs 
 Loads model weights and serves on port 8888 with tool calling support.
 
 ## Cost Analysis
@@ -59,9 +60,10 @@ Loads model weights and serves on port 8888 with tool calling support.
 | GPU Type | vRAM | Hourly Cost* | Performance |
 |----------|------|-------------|-------------|
 | A100 80GB | 80GB | $1.70/hr | ✅ Tested |
+| 2x A40 80GB | 96GB | $.80/hr | ✅ Tested |
 
 
-*Prices approximate and vary by provider
+*2x A40 is cheaper, but initial model loading takes a long time 30min
 
 ## Usage Notes
 
